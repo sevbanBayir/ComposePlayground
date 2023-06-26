@@ -1,16 +1,22 @@
 package com.sevban.composetutorialssevbanbayir.Canvas
 
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.RepeatMode
+import androidx.compose.animation.core.infiniteRepeatable
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PathMeasure
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.asAndroidPath
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.vector.PathParser
-import androidx.compose.ui.unit.dp
 import androidx.core.graphics.flatten
 
 @Composable
@@ -23,9 +29,38 @@ fun DrawOnCanvasWithSVGPath() {
         path.asAndroidPath().flatten(.5f)
     }
 
-    Canvas(modifier = Modifier.fillMaxSize(), onDraw = {
-        drawPath(path, Brush.linearGradient(colors), style = Stroke(2.dp.toPx()))
-    })
+    val progress = remember {
+        Animatable(0f)
+    }
+
+    val length = remember {
+        val pathMeasure = PathMeasure()
+        pathMeasure.setPath(path = path, forceClosed = false)
+        pathMeasure.length
+    }
+
+    LaunchedEffect(key1 = true) {
+        progress.animateTo(
+            targetValue = 1f,
+            animationSpec = infiniteRepeatable(tween(3000), repeatMode = RepeatMode.Reverse)
+        )
+    }
+
+    Canvas(modifier = Modifier.fillMaxSize()) {
+        lines.forEach { line ->
+            val currentLengt = length * progress.value
+            if (line.startFraction * length < currentLengt) {
+                drawLine(
+                    brush = Brush.linearGradient(colors),
+                    start = Offset(line.start.x, line.start.y),
+                    end = Offset(line.end.x, line.end.y),
+                    strokeWidth = 30f,
+                    cap = StrokeCap.Round
+                )
+            }
+        }
+
+    }
 }
 
 private object HelloPath {
