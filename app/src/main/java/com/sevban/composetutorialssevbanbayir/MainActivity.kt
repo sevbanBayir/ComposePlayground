@@ -5,11 +5,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
-import com.sevban.composetutorialssevbanbayir.Canvas.DrawOnCanvasWithSVGPath
-import com.sevban.composetutorialssevbanbayir.Canvas.DrawingExample8
-import com.sevban.composetutorialssevbanbayir.Canvas.DrawingExample9
-import com.sevban.composetutorialssevbanbayir.Canvas.SmoothLineGraph
-import com.sevban.composetutorialssevbanbayir.State_Compose.SaveableExpandable
+import com.sevban.composetutorialssevbanbayir.Canvas.customdarkmodeswitcher.CustomDarkModeSwithcer
+import com.sevban.composetutorialssevbanbayir.Canvas.customdarkmodeswitcher.DayNightSwitch
 import com.sevban.composetutorialssevbanbayir.ui.theme.ComposeTutorialsSevbanBayirTheme
 
 class MainActivity : ComponentActivity() {
@@ -28,8 +25,10 @@ class MainActivity : ComponentActivity() {
 //                  DrawingExample9()
                   //SmoothLineGraph()
 //                SaveableExpandable()
-                  DrawOnCanvasWithSVGPath()
-
+//                  DrawOnCanvasWithSVGPath()
+//                ConcaveDecagon()
+//                CustomDarkModeSwithcer()
+                DayNightSwitch()
             }
         }
     }

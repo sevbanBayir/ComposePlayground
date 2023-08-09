@@ -77,7 +77,8 @@ fun DrawingExample4() {
             translate(left = 100f, top = -300f) {
                 drawCircle(
                     color = Color.Cyan,
-                    radius = 200.dp.toPx()
+                    radius = 200.dp.toPx(),
+                    style = Stroke(90f)
                 )
             }
         }
