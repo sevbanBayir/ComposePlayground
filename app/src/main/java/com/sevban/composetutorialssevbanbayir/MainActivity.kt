@@ -5,8 +5,10 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
-import com.sevban.composetutorialssevbanbayir.Canvas.customdarkmodeswitcher.CustomDarkModeSwithcer
-import com.sevban.composetutorialssevbanbayir.Canvas.customdarkmodeswitcher.DayNightSwitch
+import com.sevban.composetutorialssevbanbayir.Canvas.PieChart.AnimatedChart
+import com.sevban.composetutorialssevbanbayir.Canvas.PieChart.PieChart
+import com.sevban.composetutorialssevbanbayir.Canvas.PieChart.PieChartWithText
+import com.sevban.composetutorialssevbanbayir.Canvas.PieChart.chart
 import com.sevban.composetutorialssevbanbayir.ui.theme.ComposeTutorialsSevbanBayirTheme
 
 class MainActivity : ComponentActivity() {
@@ -28,7 +30,11 @@ class MainActivity : ComponentActivity() {
 //                  DrawOnCanvasWithSVGPath()
 //                ConcaveDecagon()
 //                CustomDarkModeSwithcer()
-                DayNightSwitch()
+//                DayNightSwitch()
+//                FacebookIcon()
+//                PieChart(chartData = chart)
+                PieChartWithText()
+//                AnimatedChart()
             }
         }
     }

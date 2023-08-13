@@ -10,6 +10,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -21,6 +22,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 
 val yellow = Color(0xFFFABB51)
@@ -75,16 +77,18 @@ fun DayNightSwitch() {
     )
 
     val overLaySize by animateFloatAsState(
-        targetValue = if(day) 0f else 140f,
+        targetValue = if(day) 0f else 0.2f * sh,
         animationSpec = tween(1000)
     )
 
     LaunchedEffect(sw, sh) {
-        delay(30)
+        println("$tipOffSet")
+        delay(300)
         tipOffSet = Offset(
             x = sw / 2,
             y = (sh / 2) + 300f
         )
+        println("$tipOffSet")
     }
 
     Canvas(
@@ -104,8 +108,19 @@ fun DayNightSwitch() {
                         }
                     },
                     onDragStart = {
-                        shouldDrag =
-                            ((it.x > (sw / 2) - 20 && it.x < (sw / 2) + 20) && (it.y > ((sh / 2) + 300f) - 20 && it.y < ((sh / 2) + 300f) + 20))
+                        //This block gives us the pointer offset when the related (vertical drag) gesture
+                        //is detected.
+
+                        //With this conditions, we will be ensure that the user put the pointer to a
+                        //position that is close to our circle and line.
+
+                        val condition1 = it.x > (sw / 2) - 20 && it.x < (sw / 2) + 20
+
+                        val condition2 = it.y > ((sh / 2) + 300f) - 20
+
+                        val condition3 = it.y < ((sh / 2) + 300f) + 20
+
+                        shouldDrag = condition1 && condition2 && condition3
                     }
                 ) { change, _ ->
                     if (shouldDrag) {
@@ -125,7 +140,7 @@ fun DayNightSwitch() {
 
         drawCircle(
             center = Offset(width / 2, height / 2),
-            radius = 140f,
+            radius = (.2f * size.height).coerceAtMost(192f),
             color = circleColor
         )
 
@@ -137,9 +152,9 @@ fun DayNightSwitch() {
 
         drawLine(
             color = circleColor,
-            start = Offset(width / 2, (height / 2) + 140f),
+            start = Offset(width / 2, (height / 2) + (.2f * size.height)),
             end = animateRetract,
-            strokeWidth = 5f,
+            strokeWidth = 10f,
         )
 
         drawCircle(
@@ -147,6 +162,5 @@ fun DayNightSwitch() {
             radius = 20f,
             center = animateRetract
         )
-
     }
 }
