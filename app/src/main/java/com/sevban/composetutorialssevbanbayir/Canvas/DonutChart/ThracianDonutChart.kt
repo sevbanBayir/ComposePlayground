@@ -1,8 +1,9 @@
-package com.sevban.composetutorialssevbanbayir.Canvas.PieChart
+package com.sevban.composetutorialssevbanbayir.Canvas.DonutChart
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.text.ExperimentalTextApi
@@ -37,16 +39,14 @@ fun PieChartWithText() {
 
     Box(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(20.dp),
+            .fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         val chartDataList = listOf(
-            ChartData(Color.Blue, 10f),
-            ChartData(Color.Black, 20f),
-            ChartData(Color.White, 15f),
-            ChartData(Color.Gray, 5f),
-            ChartData(Color.Green, 50f),
+            ChartData(Color(0xFFE1F5FE), 25f),
+            ChartData(Color(0xFF81D4FA), 25f),
+            ChartData(Color(0xFF29B6F6), 25f),
+            ChartData(Color(0xFF039BE5), 25f),
         )
 
         val textMeasurer = rememberTextMeasurer()
@@ -65,13 +65,15 @@ fun PieChartWithText() {
             modifier = Modifier
                 .fillMaxWidth()
                 .aspectRatio(1f)
+                .border(1.dp, Color.Blue)
+                .padding(72.dp)
         ) {
             val width = size.width
+            val height = size.height
             val radius = width / 2f
-            val strokeWidth = radius * .5f
+            val strokeWidth = radius * .4f
             val innerRadius = radius - strokeWidth
             val lineStrokeWidth = 3.dp.toPx()
-
             var startAngle = -90f
 
             for (index in 0..chartDataList.lastIndex) {
@@ -81,6 +83,35 @@ fun PieChartWithText() {
                 val angleInRadians = (startAngle + sweepAngle / 2).degreeToRadian
                 val textMeasureResult = textMeasureResults[index]
                 val textSize = textMeasureResult.size
+
+                val textCenter = textSize.center
+                val sinY = (innerRadius + strokeWidth / 2) * sin(angleInRadians)
+                val cosX = (innerRadius + strokeWidth / 2) * cos(angleInRadians)
+                val lineStartX = -textCenter.x + center.x + cosX
+                val lineStartY = -textCenter.y + center.y + sinY
+
+
+                val xDistance =
+                    if (lineStartX > 0 && lineStartX <= width / 2f) -lineStartX
+                   else (width - lineStartX)
+
+
+                val yDistance =
+                    if (lineStartY > 0 && lineStartY <= height / 2) -lineStartY
+                    else (height - lineStartY)
+
+
+                val path = Path().apply {
+                    moveTo(lineStartX, lineStartY)
+                    lineTo(lineStartX + xDistance,lineStartY + yDistance)
+                    lineTo(lineStartX + xDistance + (xDistance / 2), lineStartY + yDistance)
+                }
+
+                drawPath(
+                    path = path,
+                    color = Color(0xFF000000),
+                    style = Stroke(width = 5f)
+                )
 
                 drawArc(
                     color = chartData.color,
@@ -92,38 +123,32 @@ fun PieChartWithText() {
                     style = Stroke(strokeWidth)
                 )
 
-                rotate(
-                    90f + startAngle
-                ) {
-                    drawLine(
-                        color = Color.White,
-                        start = Offset(radius, strokeWidth),
-                        end = Offset(radius, 0f),
-                        strokeWidth = lineStrokeWidth
-                    )
-                }
 
-                val textCenter = textSize.center
-                drawText(
-                    textLayoutResult = textMeasureResult,
-                    color = Color.Gray,
-                    topLeft = Offset(
-                        -textCenter.x + center.x + (innerRadius + strokeWidth / 2) * cos(angleInRadians),
-                        -textCenter.y + center.y + (innerRadius + strokeWidth / 2) * sin(angleInRadians)
-                    )
-                )
+                /*                drawLine(
+                                    color = Color.Gray,
+                                    start = Offset(lineStartX, lineStartY),
+                                    end = Offset(lineStartX, 0f),
+                                    strokeWidth = lineStrokeWidth
+                                )*/
 
+
+                /*                drawText(
+                                    textLayoutResult = textMeasureResult,
+                                    color = Color.Gray,
+                                    topLeft = Offset(
+                                        -textCenter.x + center.x + (innerRadius + strokeWidth / 32) * cos(angleInRadians),
+                                        -textCenter.y + center.y + (innerRadius + strokeWidth / 32) * sin(angleInRadians)
+                                    )
+                                )
+
+
+                 */
                 startAngle += sweepAngle
             }
         }
     }
 }
 
-private val Float.degreeToRadian
-    get() = (this * Math.PI / 180f).toFloat()
-
-private val Float.asAngle: Float
-    get() = this * 360f / 100f
 
 @Immutable
 data class ChartData(val color: Color, val data: Float)
@@ -243,3 +268,9 @@ fun AnimatedChart() {
         }
     }
 }
+
+val Float.degreeToRadian
+    get() = (this * Math.PI / 180f).toFloat()
+
+val Float.asAngle: Float
+    get() = this * 360f / 100f

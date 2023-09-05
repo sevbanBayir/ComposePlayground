@@ -5,10 +5,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
-import com.sevban.composetutorialssevbanbayir.Canvas.PieChart.AnimatedChart
-import com.sevban.composetutorialssevbanbayir.Canvas.PieChart.PieChart
-import com.sevban.composetutorialssevbanbayir.Canvas.PieChart.PieChartWithText
-import com.sevban.composetutorialssevbanbayir.Canvas.PieChart.chart
+import com.sevban.composetutorialssevbanbayir.Canvas.DonutChart.DonutChart
+import com.sevban.composetutorialssevbanbayir.Canvas.DonutChart.PieChartWithText
+import com.sevban.composetutorialssevbanbayir.Canvas.DonutChart.chart
 import com.sevban.composetutorialssevbanbayir.ui.theme.ComposeTutorialsSevbanBayirTheme
 
 class MainActivity : ComponentActivity() {
@@ -32,9 +31,10 @@ class MainActivity : ComponentActivity() {
 //                CustomDarkModeSwithcer()
 //                DayNightSwitch()
 //                FacebookIcon()
-//                PieChart(chartData = chart)
+//                DonutChart(chartData = chart)
                 PieChartWithText()
 //                AnimatedChart()
+//                Screen()
             }
         }
     }
