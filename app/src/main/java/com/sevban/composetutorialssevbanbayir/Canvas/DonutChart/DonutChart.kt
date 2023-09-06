@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -15,8 +16,14 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.text.ExperimentalTextApi
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.drawText
+import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.center
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.sevban.composetutorialssevbanbayir.ui.theme.Purple40
 import com.sevban.composetutorialssevbanbayir.ui.theme.Purple80
 import com.sevban.composetutorialssevbanbayir.ui.theme.PurpleGrey40
@@ -24,6 +31,7 @@ import com.sevban.composetutorialssevbanbayir.ui.theme.PurpleGrey80
 import kotlin.math.cos
 import kotlin.math.sin
 
+@OptIn(ExperimentalTextApi::class)
 @Composable
 fun DonutChart(
     chartData: ChartData2
@@ -35,10 +43,21 @@ fun DonutChart(
         contentAlignment = Alignment.Center
     ) {
 
+        val textMeasurer = rememberTextMeasurer()
+        val textMeasureResults = remember(chartData) {
+            chartData.amounts.map {
+                textMeasurer.measure(
+                    text = "%${it.toInt()}",
+                    style = TextStyle(
+                        fontSize = 18.sp
+                    )
+                )
+            }
+        }
+
         Canvas(
             modifier = Modifier
-                .size(200.dp)
-                .border(2.dp, Color.Black)
+                .aspectRatio(1f)
                 .aspectRatio(1f)
                 .padding(6.dp)
                 //.border(2.dp, Color.Black)
@@ -46,7 +65,7 @@ fun DonutChart(
             val width = size.width
             val height = size.height
             val radius =width / 3
-            val strokeWidth = 5f
+            val strokeWidth = 150f
             var startAngle = -90f
             val innerRadius = radius - strokeWidth
 
@@ -65,30 +84,36 @@ fun DonutChart(
                     size = Size(2*radius, 2*radius)
                 )
 
-                val ySegmentCenter = center.y + (innerRadius + strokeWidth) * sin(angleInRadians)
-                val xSegmentCenter = center.x + (innerRadius + strokeWidth) * cos(angleInRadians)
 
 
-                val xDistance =
-                    if (xSegmentCenter > 0 && xSegmentCenter <= width / 2f) -xSegmentCenter
-                    else (width - xSegmentCenter)
+                var ySegmentCenter = center.y + (innerRadius + strokeWidth) * sin(angleInRadians)
+                var xSegmentCenter = center.x + (innerRadius + strokeWidth) * cos(angleInRadians)
 
-                val yyDistance = when {
-                    ySegmentCenter > 0 && ySegmentCenter <= radius / 4 -> -ySegmentCenter
-                    ySegmentCenter > radius / 4 && ySegmentCenter <= radius * (3/4) -> 0f
-                    ySegmentCenter > radius * (3/4) && ySegmentCenter < radius -> (radius - ySegmentCenter)
+                if (xSegmentCenter > 0 && xSegmentCenter <= width / 2f) xSegmentCenter -= 80f
+                else xSegmentCenter += 80f
+
+                when {
+                    ySegmentCenter > 0 && ySegmentCenter < height * (2/8f) -> ySegmentCenter -= 45f
+                    ySegmentCenter >= height * (2/8f) && ySegmentCenter <= height * (6/8f) -> 0f
+                    ySegmentCenter >= height * (6/8f) && ySegmentCenter <= height -> ySegmentCenter += 45f
                     else -> 0f
                 }
 
-                val yDistance =
-                    if (ySegmentCenter > 0 && ySegmentCenter <= height / 2) - ySegmentCenter
-                    else (height - ySegmentCenter)
+                val xDistance =
+                    if (xSegmentCenter > 0 && xSegmentCenter <= width / 2f) -xSegmentCenter / 2f
+                    else (width - xSegmentCenter) / 2f
+
+                val yyDistance = when {
+                    ySegmentCenter > 0 && ySegmentCenter < height * (2/8f) -> -ySegmentCenter / 2f
+                    ySegmentCenter >= height * (2/8f) && ySegmentCenter <= height * (6/8f) -> 0f
+                    ySegmentCenter >= height * (6/8f) && ySegmentCenter <= height -> (height - ySegmentCenter) / 2f
+                    else -> 0f
+                }
 
                 val path = Path().apply {
                     moveTo(xSegmentCenter, ySegmentCenter)
-                    lineTo(xSegmentCenter + xDistance, ySegmentCenter)
-
-
+                    lineTo(xSegmentCenter + xDistance, ySegmentCenter + yyDistance)
+                    lineTo(xSegmentCenter + xDistance + xDistance, ySegmentCenter + yyDistance)
                 }
 
                 drawPath(
@@ -96,7 +121,17 @@ fun DonutChart(
                     color = Color.Black,
                     style = Stroke(width = 5f)
                 )
+                val xTopLeft = if (xSegmentCenter > 0 && xSegmentCenter <= width / 2f) xSegmentCenter + xDistance + xDistance
+                else xSegmentCenter + xDistance + xDistance - textMeasureResults[index].size.width
 
+                drawText(
+                    textLayoutResult = textMeasureResults[index],
+                    color = chartData.colors[index],
+                    topLeft = Offset(
+                        x = xTopLeft,
+                        y = ySegmentCenter + yyDistance
+                    )
+                )
 
                 startAngle += chartEntry.asAngle // increase sweep angle
             }
@@ -105,6 +140,14 @@ fun DonutChart(
         }
     }
 }
+
+val chartDataList = listOf(
+    ChartData(Color.Gray, 12.5f),
+    ChartData(Color.Blue, 12.5f),
+    ChartData(Color.Green, 12.5f),
+    ChartData(Color.Cyan, 12.5f),
+    ChartData(Color.Magenta, 50f),
+)
 
 data class ChartData2(
     val amounts: List<Float> = emptyList(),
