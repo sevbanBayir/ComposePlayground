@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
@@ -43,10 +44,14 @@ fun PieChartWithText() {
         contentAlignment = Alignment.Center
     ) {
         val chartDataList = listOf(
-            ChartData(Color(0xFFE1F5FE), 25f),
-            ChartData(Color(0xFF81D4FA), 25f),
-            ChartData(Color(0xFF29B6F6), 25f),
-            ChartData(Color(0xFF039BE5), 25f),
+            ChartData(Color(0xFFE1F5FE), 12.5f),
+            ChartData(Color(0xFF316D88), 12.5f),
+            ChartData(Color(0xFFF9A825), 12.5f),
+            ChartData(Color(0xFFEF6C00), 12.5f),
+            ChartData(Color(0xFFD84315), 12.5f),
+            ChartData(Color(0xFF2E7D32), 12.5f),
+            ChartData(Color(0xFF6A1B9A), 12.5f),
+            ChartData(Color(0xFF1565C0), 12.5f),
         )
 
         val textMeasurer = rememberTextMeasurer()
@@ -64,7 +69,7 @@ fun PieChartWithText() {
         Canvas(
             modifier = Modifier
                 .fillMaxWidth()
-                .aspectRatio(1f)
+                .size(400.dp)
                 .border(1.dp, Color.Blue)
                 .padding(72.dp)
         ) {
@@ -73,7 +78,6 @@ fun PieChartWithText() {
             val radius = width / 2f
             val strokeWidth = radius * .4f
             val innerRadius = radius - strokeWidth
-            val lineStrokeWidth = 3.dp.toPx()
             var startAngle = -90f
 
             for (index in 0..chartDataList.lastIndex) {
@@ -85,27 +89,41 @@ fun PieChartWithText() {
                 val textSize = textMeasureResult.size
 
                 val textCenter = textSize.center
-                val sinY = (innerRadius + strokeWidth / 2) * sin(angleInRadians)
-                val cosX = (innerRadius + strokeWidth / 2) * cos(angleInRadians)
-                val lineStartX = -textCenter.x + center.x + cosX
-                val lineStartY = -textCenter.y + center.y + sinY
+                val yCenterSegment = (innerRadius + strokeWidth / 2) * sin(angleInRadians)
+                val xCenterSegment = (innerRadius + strokeWidth / 2) * cos(angleInRadians)
+                val lineStartX = -textCenter.x + center.x + xCenterSegment
+                val lineStartY = -textCenter.y + center.y + yCenterSegment
 
 
                 val xDistance =
                     if (lineStartX > 0 && lineStartX <= width / 2f) -lineStartX
-                   else (width - lineStartX)
+                    else (width - lineStartX)
 
+                val yyDistance = when {
+                    lineStartY > 0 && lineStartY <= radius / 4 -> -lineStartY
+                    lineStartY > radius / 4 && lineStartY <= radius * (3/4) -> 0f
+                    lineStartY > radius * (3/4) && lineStartY < radius -> (radius - lineStartY)
+                    else -> 0f
+                }
 
                 val yDistance =
                     if (lineStartY > 0 && lineStartY <= height / 2) -lineStartY
                     else (height - lineStartY)
 
-
                 val path = Path().apply {
                     moveTo(lineStartX, lineStartY)
-                    lineTo(lineStartX + xDistance,lineStartY + yDistance)
-                    lineTo(lineStartX + xDistance + (xDistance / 2), lineStartY + yDistance)
+                    lineTo(lineStartX + xDistance, lineStartY + yyDistance)
+                    lineTo(lineStartX + xDistance + (xDistance / 2), lineStartY + yyDistance)
                 }
+
+                println("center X: " + lineStartX)
+                println("center Y: " + lineStartY)
+                println("distance x: " + xDistance)
+                println("distance y: " + yDistance)
+                println("width: " + width)
+                println("height: " + height)
+                println(" ")
+
 
                 drawPath(
                     path = path,
@@ -122,27 +140,16 @@ fun PieChartWithText() {
                     size = Size(width - strokeWidth, width - strokeWidth),
                     style = Stroke(strokeWidth)
                 )
+/*
+                drawText(
+                    textLayoutResult = textMeasureResult,
+                    color = Color.Gray,
+                    topLeft = Offset(
+                        -textCenter.x + lineStartX + xDistance + (xDistance),
+                        -textCenter.y + lineStartY + yDistance
+                    )
+                )*/
 
-
-                /*                drawLine(
-                                    color = Color.Gray,
-                                    start = Offset(lineStartX, lineStartY),
-                                    end = Offset(lineStartX, 0f),
-                                    strokeWidth = lineStrokeWidth
-                                )*/
-
-
-                /*                drawText(
-                                    textLayoutResult = textMeasureResult,
-                                    color = Color.Gray,
-                                    topLeft = Offset(
-                                        -textCenter.x + center.x + (innerRadius + strokeWidth / 32) * cos(angleInRadians),
-                                        -textCenter.y + center.y + (innerRadius + strokeWidth / 32) * sin(angleInRadians)
-                                    )
-                                )
-
-
-                 */
                 startAngle += sweepAngle
             }
         }
