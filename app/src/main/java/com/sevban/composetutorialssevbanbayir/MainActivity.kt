@@ -31,8 +31,8 @@ class MainActivity : ComponentActivity() {
 //                CustomDarkModeSwithcer()
 //                DayNightSwitch()
 //                FacebookIcon()
-//                DonutChart(chartData = chart)
-                PieChartWithText()
+                DonutChart(chartData = chart)
+//                PieChartWithText()
 //                AnimatedChart()
 //                Screen()
             }
