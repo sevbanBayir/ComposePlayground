@@ -60,7 +60,7 @@ fun LazyListSample() {
                     .fillMaxWidth()
                     .statusBarsPadding(),
                 shape = RoundedCornerShape(10.dp),
-                ) {
+            ) {
                 Column(
                     modifier = Modifier
                         .padding(horizontal = 8.dp, vertical = 12.dp)
@@ -70,7 +70,7 @@ fun LazyListSample() {
                     LazyColumn(
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        itemsIndexed(listOf(1, 2, 3, 4, 5 ,6)) { index, item ->
+                        itemsIndexed(listOf(1, 2, 3, 4, 5, 6)) { index, item ->
                             ManageCredentialItem()
                         }
                     }
@@ -109,7 +109,7 @@ private fun ManageCredentialItem() {
         Column() {
             Text("Module 1 some text")
 
-                Text("Subtitle")
+            Text("Subtitle")
 
         }
         Spacer(modifier = Modifier.weight(1f))

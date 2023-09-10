@@ -32,7 +32,7 @@ fun InstagramIcon() {
         drawCircle(
             brush = Brush.linearGradient(colors = instaColors),
             radius = 45f * size.height * .0045f,
-            style = Stroke(width = 15f * size.height * .006f , cap = StrokeCap.Round)
+            style = Stroke(width = 15f * size.height * .006f, cap = StrokeCap.Round)
         )
         drawCircle(
             brush = Brush.linearGradient(colors = instaColors),

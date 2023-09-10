@@ -10,7 +10,6 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -20,9 +19,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 
 val yellow = Color(0xFFFABB51)
@@ -67,7 +64,7 @@ fun DayNightSwitch() {
     }
 
     val bgColor by animateColorAsState(
-        targetValue = if(day) light else dark,
+        targetValue = if (day) light else dark,
         animationSpec = tween(1000)
     )
 
@@ -77,7 +74,7 @@ fun DayNightSwitch() {
     )
 
     val overLaySize by animateFloatAsState(
-        targetValue = if(day) 0f else 0.2f * sh,
+        targetValue = if (day) 0f else 0.2f * sh,
         animationSpec = tween(1000)
     )
 

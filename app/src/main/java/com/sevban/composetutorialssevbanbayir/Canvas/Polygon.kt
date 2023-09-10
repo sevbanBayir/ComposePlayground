@@ -1,6 +1,5 @@
 package com.sevban.composetutorialssevbanbayir.Canvas
 
-import android.graphics.Paint.Join
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
@@ -68,10 +67,12 @@ fun ConcaveDecagon() {
         val points = arrayListOf<Offset>()
 
         for (angle in 0 until 360 step 30) {
-            points.add(Offset(
-                (cos(angle * Math.PI / 2) * 100f).toFloat(),
-                (sin(angle * Math.PI / 2) * 100f).toFloat()
-            ))
+            points.add(
+                Offset(
+                    (cos(angle * Math.PI / 2) * 100f).toFloat(),
+                    (sin(angle * Math.PI / 2) * 100f).toFloat()
+                )
+            )
         }
 
         drawPath(

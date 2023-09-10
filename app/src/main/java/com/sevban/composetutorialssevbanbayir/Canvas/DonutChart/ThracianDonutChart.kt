@@ -101,8 +101,8 @@ fun PieChartWithText() {
 
                 val yyDistance = when {
                     lineStartY > 0 && lineStartY <= radius / 4 -> -lineStartY
-                    lineStartY > radius / 4 && lineStartY <= radius * (3/4) -> 0f
-                    lineStartY > radius * (3/4) && lineStartY < radius -> (radius - lineStartY)
+                    lineStartY > radius / 4 && lineStartY <= radius * (3 / 4) -> 0f
+                    lineStartY > radius * (3 / 4) && lineStartY < radius -> (radius - lineStartY)
                     else -> 0f
                 }
 
@@ -140,15 +140,15 @@ fun PieChartWithText() {
                     size = Size(width - strokeWidth, width - strokeWidth),
                     style = Stroke(strokeWidth)
                 )
-/*
-                drawText(
-                    textLayoutResult = textMeasureResult,
-                    color = Color.Gray,
-                    topLeft = Offset(
-                        -textCenter.x + lineStartX + xDistance + (xDistance),
-                        -textCenter.y + lineStartY + yDistance
-                    )
-                )*/
+                /*
+                                drawText(
+                                    textLayoutResult = textMeasureResult,
+                                    color = Color.Gray,
+                                    topLeft = Offset(
+                                        -textCenter.x + lineStartX + xDistance + (xDistance),
+                                        -textCenter.y + lineStartY + yDistance
+                                    )
+                                )*/
 
                 startAngle += sweepAngle
             }

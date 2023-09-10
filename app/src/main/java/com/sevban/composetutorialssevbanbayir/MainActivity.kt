@@ -6,8 +6,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import com.sevban.composetutorialssevbanbayir.Canvas.DonutChart.DonutChart
-import com.sevban.composetutorialssevbanbayir.Canvas.DonutChart.PieChartWithText
-import com.sevban.composetutorialssevbanbayir.Canvas.DonutChart.chart
+import com.sevban.composetutorialssevbanbayir.Canvas.DonutChart.chartDataList
 import com.sevban.composetutorialssevbanbayir.ui.theme.ComposeTutorialsSevbanBayirTheme
 
 class MainActivity : ComponentActivity() {
@@ -24,14 +23,14 @@ class MainActivity : ComponentActivity() {
 //                DrawingExample7()
 //                DrawingExample8()
 //                  DrawingExample9()
-                  //SmoothLineGraph()
+                //SmoothLineGraph()
 //                SaveableExpandable()
 //                  DrawOnCanvasWithSVGPath()
 //                ConcaveDecagon()
 //                CustomDarkModeSwithcer()
 //                DayNightSwitch()
 //                FacebookIcon()
-                DonutChart(chartData = chart)
+                DonutChart(chartData = chartDataList)
 //                PieChartWithText()
 //                AnimatedChart()
 //                Screen()

@@ -28,8 +28,8 @@ fun DonutChartWithCenteredText(
     Canvas(
         modifier = modifier
             .pointerInput(Unit) { //TODO
-        },
-        ) {
+            },
+    ) {
         val height = size.height
         val width = size.width
         val totalValue = inputState.sumOf { it.value }

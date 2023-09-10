@@ -1,15 +1,11 @@
 package com.sevban.composetutorialssevbanbayir.Modifier
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.indication
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -19,7 +15,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun PaddingExercise1() {
-    Box (
+    Box(
         modifier = Modifier
             .padding(16.dp)
             .fillMaxSize()
@@ -27,34 +23,34 @@ fun PaddingExercise1() {
             .clip(RoundedCornerShape(80.dp))
             .padding(0.dp)
             .clickable { }
-    ){
+    ) {
 
     }
 }
 
 @Composable
 fun PaddingExercise2() {
-    Box (
+    Box(
         modifier = Modifier
 
             .border(4.dp, Color.LightGray, RoundedCornerShape(24.dp))
             .padding(16.dp)
             .clickable { }
-    ){
+    ) {
 
     }
 }
 
 @Composable
 fun PaddingExercise3() {
-    Box (
+    Box(
         modifier = Modifier
             .padding(16.dp)
             .fillMaxSize()
             .border(4.dp, Color.LightGray, RoundedCornerShape(0.dp))
             .padding(16.dp)
             .clickable { }
-    ){
+    ) {
 
     }
 }

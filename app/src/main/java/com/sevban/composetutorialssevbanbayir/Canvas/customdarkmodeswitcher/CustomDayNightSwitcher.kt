@@ -15,8 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.delay
-import kotlin.time.Duration.Companion.seconds
 
 private val yellow1 = Color(0xFFFABB51)
 private val dark1 = Color(0xFF191919)
@@ -33,7 +31,10 @@ fun CustomDarkModeSwithcer(
     LaunchedEffect(key1 = true) {
         animatable.animateTo(1f, animationSpec = tween(5000))
     }
-    Box(Modifier.fillMaxSize().background(color = light1), contentAlignment = Alignment.Center) {
+    Box(
+        Modifier
+            .fillMaxSize()
+            .background(color = light1), contentAlignment = Alignment.Center) {
         Canvas(modifier = modifier.size(200.dp)) {
 
             val height = size.height

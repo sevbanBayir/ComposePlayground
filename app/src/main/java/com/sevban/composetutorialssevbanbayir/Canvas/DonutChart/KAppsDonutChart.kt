@@ -2,30 +2,46 @@ package com.sevban.composetutorialssevbanbayir.Canvas.DonutChart
 
 
 import android.graphics.Paint
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.*
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.graphics.drawscope.scale
+import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.sevban.composetutorialssevbanbayir.ui.theme.*
+import com.sevban.composetutorialssevbanbayir.ui.theme.blueGray
+import com.sevban.composetutorialssevbanbayir.ui.theme.brightBlue
+import com.sevban.composetutorialssevbanbayir.ui.theme.gray
+import com.sevban.composetutorialssevbanbayir.ui.theme.green
+import com.sevban.composetutorialssevbanbayir.ui.theme.orange
+import com.sevban.composetutorialssevbanbayir.ui.theme.purple
+import com.sevban.composetutorialssevbanbayir.ui.theme.redOrange
+import com.sevban.composetutorialssevbanbayir.ui.theme.white
 import kotlin.math.PI
 import kotlin.math.atan2
 
@@ -192,7 +208,7 @@ fun DonutChart(
                         }
                     }
                 }
-                if (pieChartInput.isTapped) { 
+                if (pieChartInput.isTapped) {
                     val tabRotation = currentStartAngle - angleToDraw - 90f
                     rotate(tabRotation) {
                         drawRoundRect(
