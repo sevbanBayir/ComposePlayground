@@ -34,7 +34,8 @@ fun CustomDarkModeSwithcer(
     Box(
         Modifier
             .fillMaxSize()
-            .background(color = light1), contentAlignment = Alignment.Center) {
+            .background(color = light1), contentAlignment = Alignment.Center
+    ) {
         Canvas(modifier = modifier.size(200.dp)) {
 
             val height = size.height
