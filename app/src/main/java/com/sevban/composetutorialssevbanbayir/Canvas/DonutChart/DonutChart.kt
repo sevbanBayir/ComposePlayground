@@ -23,9 +23,9 @@ fun DonutChart(
     donutChartState: DonutChartState,
 ) {
 
-    LaunchedEffect(key1 = true) {
+/*    LaunchedEffect(key1 = true) {
         donutChartState.animator.animateTo(1f, animationSpec = tween(1000))
-    }
+    }*/
 
     Canvas(
         modifier = Modifier
@@ -57,7 +57,7 @@ fun DonutChart(
             drawArc(
                 color = chartEntry.color,
                 startAngle = donutChartState.startAngle,
-                sweepAngle = sweepAngle * donutChartState.animator.value,
+                sweepAngle = sweepAngle,
                 useCenter = false,
                 topLeft = Offset(
                     x = donutChartState.center.x - donutChartState.radius,
@@ -67,7 +67,7 @@ fun DonutChart(
                 size = Size(2 * donutChartState.radius, 2 * donutChartState.radius)
             )
 
-            clipRect(right = size.width * donutChartState.animator.value) {
+            clipRect(right = size.width ) {
                 drawPath(
                     path = path,
                     color = Color.Black,

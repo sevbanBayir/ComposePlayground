@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.text.ExperimentalTextApi
 import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.sp
 import com.sevban.composetutorialssevbanbayir.Canvas.DonutChart.ChartData
 import com.sevban.composetutorialssevbanbayir.Canvas.DonutChart.asAngle
@@ -20,10 +21,10 @@ import kotlin.math.sin
 class DonutChartState constructor(
     val chartData: List<ChartData>,
     private val textMeasurer: TextMeasurer,
-    private val size: Size,
+    private val dpSize: DpSize,
 ) {
-
-    val animator = Animatable(0f)
+    val size = Size(dpSize.width.value * 3, dpSize.height.value * 3)
+//    val animator = Animatable(1f)
 
     val textMeasureResult = chartData.map {
         textMeasurer.measure(
@@ -61,7 +62,6 @@ class DonutChartState constructor(
             ySegmentCenter > 0 && ySegmentCenter < height * (2 / 8f) -> ySegmentCenter -= 45f
             ySegmentCenter >= height * (2 / 8f) && ySegmentCenter <= height * (6 / 8f) -> 0f
             ySegmentCenter >= height * (6 / 8f) && ySegmentCenter <= height -> ySegmentCenter += 45f
-            else -> 0f
         }
         return ySegmentCenter
     }
@@ -117,12 +117,12 @@ class DonutChartState constructor(
 @Composable
 fun rememberDonutChartState(
     chartData: List<ChartData>,
-    size: Size,
+    size: DpSize,
     textMeasurer: TextMeasurer
 ) = remember {
     DonutChartState(
         chartData = chartData,
-        size = size,
+        dpSize = size,
         textMeasurer = textMeasurer
     )
 }
