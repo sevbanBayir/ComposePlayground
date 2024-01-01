@@ -34,12 +34,7 @@ import kotlin.math.sin
 fun DonutChart(
     chartData: List<ChartData>
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .border(3.dp, Color.Blue),
-        contentAlignment = Alignment.Center
-    ) {
+
         val floatAnimatable = remember {
             Animatable(0f)
         }
@@ -139,7 +134,7 @@ fun DonutChart(
                 startAngle += chartEntry.data.asAngle // increase sweep angle
             }
         }
-    }
+
 }
 
 val chartDataList = listOf(
