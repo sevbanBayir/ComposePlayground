@@ -55,8 +55,8 @@ class MainActivity : ComponentActivity() {
                     val donutChartState = rememberDonutChartState(
                         chartData = chartDataList,
                         size = Size(
-                            this.constraints.maxWidth.toFloat(),
-                            this.constraints.maxHeight.toFloat()
+                            1200f,
+                            1200f
                         ),
                         textMeasurer = rememberTextMeasurer()
                     )
