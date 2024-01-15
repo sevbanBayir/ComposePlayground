@@ -1,8 +1,6 @@
 package com.sevban.composetutorialssevbanbayir.plain_state_holder_exp
 
-import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.Animatable
-import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
@@ -16,44 +14,39 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.unit.IntSize
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.times
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 import kotlin.time.Duration.Companion.seconds
 
 @Composable
 fun AnimatedButtonWithStateH() {
 
     var isLoading by remember { mutableStateOf(false) }
-    val animator = remember {
-        Animatable(0f)
-    }
+
     val coroutineScope = rememberCoroutineScope()
 
+    val animatedButtonState = rememberAnimatedButtonState(isLoading)
+
     LaunchedEffect(key1 = isLoading) {
-        if (animator.value == 1f && !isLoading)
-            animator.animateTo(0f)
-        if (isLoading)
-            animator.animateTo(1f)
+        animatedButtonState.animateButtonSizeWhenLoading()
     }
 
     ElevatedButton(
         onClick = {
 
             coroutineScope.launch {
-                delay(3.seconds)
+                delay(1.seconds)
                 isLoading = true
-                delay(3.seconds)
+                delay(6.seconds)
                 isLoading = false
             }
         },
         shape = RoundedCornerShape(36.dp),
-        modifier = Modifier.size(
-             48.dp * animator.value + 96.dp
-        ).animateContentSize { initialValue, targetValue ->
-        }
+        modifier = Modifier.size(animatedButtonState.animator.value * 96.dp + 96.dp).background(color = Color(Random.nextInt()))
     ) {
         if (isLoading)
             CircularProgressIndicator()
