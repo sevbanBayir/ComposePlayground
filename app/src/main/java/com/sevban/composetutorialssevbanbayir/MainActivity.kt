@@ -5,9 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
-import com.sevban.composetutorialssevbanbayir.Canvas.DonutChart.DonutChart
-import com.sevban.composetutorialssevbanbayir.Canvas.DonutChart.chartDataList
-import com.sevban.composetutorialssevbanbayir.plain_state_holder_exp.AnimatedButtonWithStateH
+import com.sevban.composetutorialssevbanbayir.Canvas.CrossingComposables
 import com.sevban.composetutorialssevbanbayir.ui.theme.ComposeTutorialsSevbanBayirTheme
 
 class MainActivity : ComponentActivity() {
@@ -16,7 +14,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             ComposeTutorialsSevbanBayirTheme {
-                AnimatedButtonWithStateH()
+//                AnimatedButtonWithStateH()
 //                DrawingExample2()
 //                DrawingExample3()
 //                DrawingExample4()
@@ -36,6 +34,8 @@ class MainActivity : ComponentActivity() {
 //                PieChartWithText()
 //                AnimatedChart()
 //                Screen()
+                    CrossingComposables()
+
             }
         }
     }
