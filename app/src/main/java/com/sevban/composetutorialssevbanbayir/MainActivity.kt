@@ -5,7 +5,15 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
-import com.sevban.composetutorialssevbanbayir.animations.SpringAnimationInspection
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import com.sevban.composetutorialssevbanbayir.animations.spring.SpringAnimationInspection
 import com.sevban.composetutorialssevbanbayir.ui.theme.ComposeTutorialsSevbanBayirTheme
 import org.kotlinmath.Complex
 import org.kotlinmath.I
@@ -39,7 +47,11 @@ class MainActivity : ComponentActivity() {
 //                PieChartWithText()
 //                AnimatedChart()
 //                Screen()
-                SpringAnimationInspection()
+
+                Box (Modifier.fillMaxSize().border(2.dp, Color.Blue), contentAlignment = Alignment.Center) {
+                    SpringAnimationInspection()
+                }
+
 
             }
         }
@@ -54,4 +66,6 @@ class MainActivity : ComponentActivity() {
     fun imgFunction(angleT: Float): Complex {
         return pow(Math.E, -I * angleT) + pow(3 * Math.E, 1.0625 * I * angleT)
     }
+    val asd = imgFunction(2f).im
+    val das = imgFunction(2f).re
 }
