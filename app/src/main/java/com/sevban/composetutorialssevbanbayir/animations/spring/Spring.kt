@@ -20,7 +20,7 @@ fun SpringAnimationInspection() {
     }
     ballList.forEach {
         offsetY += 400f
-        SpringBall(
+        SpringBallGraph(
             ballData = it,
             radius = radius,
             springBallLocation = Offset(
