@@ -22,7 +22,6 @@ fun SpringBall(
     }
 
     LaunchedEffect(key1 = true) {
-
         offsetXMultiplier.animateTo(
             1f,
             animationSpec = spring(
