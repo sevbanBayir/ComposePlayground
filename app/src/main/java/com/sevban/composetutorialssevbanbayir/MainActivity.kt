@@ -29,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.sevban.composetutorialssevbanbayir.special_components.FadingEdgeNumberPicker
+import com.sevban.composetutorialssevbanbayir.special_components.Neumorphism
 import com.sevban.composetutorialssevbanbayir.special_components.State
 import com.sevban.composetutorialssevbanbayir.ui.theme.ComposeTutorialsSevbanBayirTheme
 import org.kotlinmath.Complex
@@ -69,7 +70,8 @@ class MainActivity : ComponentActivity() {
                                     SpringAnimationInspection()
                                 }*/
 
-            FadingEdgeNumberPicker()
+//            FadingEdgeNumberPicker()
+                Neumorphism()
             }
         }
     }
