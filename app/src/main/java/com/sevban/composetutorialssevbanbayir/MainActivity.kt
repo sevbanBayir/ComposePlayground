@@ -6,6 +6,16 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import com.sevban.composetutorialssevbanbayir.special_components.curvedbottomnav.b_2.CurvedRect
 import com.sevban.composetutorialssevbanbayir.ui.theme.ComposeTutorialsSevbanBayirTheme
 import org.kotlinmath.Complex
 import org.kotlinmath.I
@@ -46,7 +56,15 @@ class MainActivity : ComponentActivity() {
                                 }*/
 
 //            FadingEdgeNumberPicker()
-
+                Column(
+                    modifier = Modifier.fillMaxSize().border(3.dp, Color.Green),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    CurvedRect(
+                        Modifier.border(2.dp, Color.Red)
+                    )
+                }
             }
         }
     }

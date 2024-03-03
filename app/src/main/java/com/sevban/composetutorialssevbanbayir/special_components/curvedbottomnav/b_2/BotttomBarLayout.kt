@@ -6,12 +6,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.BottomAppBar
-import androidx.compose.material.BottomAppBarCutoutOffset
-import androidx.compose.material.BottomAppBarRoundedEdgeRadius
-import androidx.compose.material.FabPlacement
-import androidx.compose.material.calculateCutoutCircleYIntercept
-import androidx.compose.material.calculateRoundedEdgeIntercept
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
@@ -27,6 +21,7 @@ import androidx.compose.ui.graphics.addOutline
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import kotlin.math.sqrt
 
 @Composable
 fun BottomBarLayout(
@@ -45,7 +40,7 @@ fun BottomBarLayout(
 
 private data class BottomAppBarCutoutShape(
     val cutoutShape: Shape,
-    val fabPlacement: com.sevban.composetutorialssevbanbayir.special_components.curvedbottomnav.b_2.FabPlacement
+    val fabPlacement: FabPlacement
 ) : Shape {
 
     override fun createOutline(
@@ -174,18 +169,97 @@ internal class FabPlacement(
     val width: Int,
     val height: Int
 )
+
 private val FabSpacing = 16.dp
 
 private val AppBarHeight = 56.dp
+
 // TODO: this should probably be part of the touch target of the start and end icons, clarify this
 private val AppBarHorizontalPadding = 4.dp
+
 // Start inset for the title when there is no navigation icon provided
 private val TitleInsetWithoutIcon = Modifier.width(16.dp - AppBarHorizontalPadding)
+
 // Start inset for the title when there is a navigation icon provided
-private val TitleIconModifier = Modifier.fillMaxHeight()
+private val TitleIconModifier = Modifier
+    .fillMaxHeight()
     .width(72.dp - AppBarHorizontalPadding)
 
 // The gap on all sides between the FAB and the cutout
 private val BottomAppBarCutoutOffset = 8.dp
+
 // How far from the notch the rounded edges start
 private val BottomAppBarRoundedEdgeRadius = 4.dp
+
+
+@Suppress("NOTHING_TO_INLINE")
+internal inline fun calculateCutoutCircleYIntercept(
+    cutoutRadius: Float,
+    verticalOffset: Float
+): Float {
+    return -sqrt(square(cutoutRadius) - square(verticalOffset))
+}
+
+@Suppress("NOTHING_TO_INLINE")
+private inline fun square(x: Float) = x * x
+
+@Suppress("UnnecessaryVariable")
+internal fun calculateRoundedEdgeIntercept(
+    controlPointX: Float,
+    verticalOffset: Float,
+    radius: Float
+): Pair<Float, Float> {
+    val a = controlPointX
+    val b = verticalOffset
+    val r = radius
+
+    // expands to a2b2r2 + b4r2 - b2r4
+    val discriminant =
+        square(b) * square(r) * (square(
+            a
+        ) + square(b) - square(r))
+    val divisor = square(a) + square(b)
+    // the '-b' part of the quadratic solution
+    val bCoefficient = a * square(r)
+
+    // Two solutions for the x coordinate relative to the midpoint of the circle
+    val xSolutionA = (bCoefficient - sqrt(discriminant)) / divisor
+    val xSolutionB = (bCoefficient + sqrt(discriminant)) / divisor
+
+    // Get y coordinate from r2 = x2 + y2 -> y2 = r2 - x2
+    val ySolutionA = sqrt(
+        square(r) - square(
+            xSolutionA
+        )
+    )
+    val ySolutionB = sqrt(
+        square(r) - square(
+            xSolutionB
+        )
+    )
+
+    // If the vertical offset is 0, the vertical center of the circle lines up with the top edge of
+    // the bottom app bar, so both solutions are identical.
+    // If the vertical offset is not 0, there are two distinct solutions: one that will meet in the
+    // top half of the circle, and one that will meet in the bottom half of the circle. As the app
+    // bar is always on the bottom edge of the circle, we are always interested in the bottom half
+    // solution. To calculate which is which, it depends on whether the vertical offset is positive
+    // or negative.
+    val (xSolution, ySolution) = if (b > 0) {
+        // When the offset is positive, the top edge of the app bar is below the center of the
+        // circle. The largest solution will be the one closest to the bottom of the circle, so we
+        // pick that.
+        if (ySolutionA > ySolutionB) xSolutionA to ySolutionA else xSolutionB to ySolutionB
+    } else {
+        // When the offset is negative, the top edge of the app bar is above the center of the
+        // circle. The smallest solution will be the one closest to the top of the circle, so we
+        // pick that.
+        if (ySolutionA < ySolutionB) xSolutionA to ySolutionA else xSolutionB to ySolutionB
+    }
+
+    // If the calculated x coordinate is further away from the origin than the control point, the
+    // curve will fold back on itself. In this scenario, we actually join the circle above the
+    // center, so invert the y coordinate.
+    val adjustedYSolution = if (xSolution < controlPointX) -ySolution else ySolution
+    return xSolution to adjustedYSolution
+}
