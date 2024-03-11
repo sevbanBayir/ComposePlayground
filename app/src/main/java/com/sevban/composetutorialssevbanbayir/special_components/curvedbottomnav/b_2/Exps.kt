@@ -77,7 +77,6 @@ fun CurvedRect(
             path = bottomBarPath,
             color = Color.Black,
         )
-
     }
 }
 
