@@ -6,39 +6,29 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
-import androidx.compose.material.Icon
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Path
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import com.sevban.composetutorialssevbanbayir.hyperlinktext.HyperlinkText
 import com.sevban.composetutorialssevbanbayir.special_components.curvedbottomnav.b_1.Screen
-import com.sevban.composetutorialssevbanbayir.special_components.curvedbottomnav.b_2.CustomBottomNavigationLayout
 import com.sevban.composetutorialssevbanbayir.ui.theme.ComposeTutorialsSevbanBayirTheme
-import com.sevban.composetutorialssevbanbayir.utils.getScreenSizeDp
 import org.kotlinmath.Complex
 import org.kotlinmath.I
 import org.kotlinmath.plus
@@ -78,119 +68,152 @@ class MainActivity : ComponentActivity() {
                                 }*/
 
 //            FadingEdgeNumberPicker()
-                Scaffold(
-                    bottomBar = {
-                        val curveSize = 120.dp
-                        val bottomBarWidth = getScreenSizeDp().screenWidth
-                        val bottomBarHeight = 120.dp
-                        val cpHeight = 20.dp
+                /*                Scaffold(
+                                    bottomBar = {
+                                        val curveSize = 120.dp
+                                        val bottomBarWidth = getScreenSizeDp().screenWidth
+                                        val bottomBarHeight = 120.dp
+                                        val cpHeight = 20.dp
 
-                        CustomBottomNavigationLayout(
-                            modifier = Modifier
-                                .drawBehind {
-                                    val gradient = Brush.radialGradient(
-                                        listOf(
-                                            Color(0XFF0DACE1),
-                                            Color(0XFF00B100),
-                                            Color.Black,
-                                        ),
-                                        center = Offset((bottomBarWidth.toPx() / 2f), 0f)
-                                    )
+                                        CustomBottomNavigationLayout(
+                                            modifier = Modifier
+                                                .drawBehind {
+                                                    val gradient = Brush.radialGradient(
+                                                        listOf(
+                                                            Color(0XFF0DACE1),
+                                                            Color(0XFF00B100),
+                                                            Color.Black,
+                                                        ),
+                                                        center = Offset((bottomBarWidth.toPx() / 2f), 0f)
+                                                    )
 
-                                    val halfWidth = bottomBarWidth.toPx() / 2
-                                    val halfMinusHalf = halfWidth - curveSize.toPx() / 2
-                                    val halfPlusHalf = halfWidth + curveSize.toPx() / 2
-                                    val halfOfCurve = curveSize.toPx() / 2
+                                                    val halfWidth = bottomBarWidth.toPx() / 2
+                                                    val halfMinusHalf = halfWidth - curveSize.toPx() / 2
+                                                    val halfPlusHalf = halfWidth + curveSize.toPx() / 2
+                                                    val halfOfCurve = curveSize.toPx() / 2
 
-                                    val bottomBarPath = Path().apply {
-                                        lineTo(halfMinusHalf - 450f, 0f)
-                                        cubicTo(
-                                            x1 = halfWidth,
-                                            y1 = 0f,
-                                            x2 = halfMinusHalf,
-                                            y2 = -cpHeight.toPx(),
-                                            x3 = halfWidth,
-                                            y3 = -cpHeight.toPx(),
-                                        )
-                                        cubicTo(
-                                            x1 = halfPlusHalf,
-                                            y1 = -cpHeight.toPx(),
-                                            x2 = halfWidth,
-                                            y2 = 0f,
-                                            x3 = halfPlusHalf + 450f,
-                                            y3 = 0f,
-                                        )
-                                        lineTo(bottomBarWidth.toPx(), 0f)
-                                        lineTo(bottomBarWidth.toPx(), bottomBarHeight.toPx())
-                                        lineTo(0f, bottomBarHeight.toPx())
-                                        lineTo(0f, 0f)
-                                        close()
+                                                    val bottomBarPath = Path().apply {
+                                                        lineTo(halfMinusHalf - 450f, 0f)
+                                                        cubicTo(
+                                                            x1 = halfWidth,
+                                                            y1 = 0f,
+                                                            x2 = halfMinusHalf,
+                                                            y2 = -cpHeight.toPx(),
+                                                            x3 = halfWidth,
+                                                            y3 = -cpHeight.toPx(),
+                                                        )
+                                                        cubicTo(
+                                                            x1 = halfPlusHalf,
+                                                            y1 = -cpHeight.toPx(),
+                                                            x2 = halfWidth,
+                                                            y2 = 0f,
+                                                            x3 = halfPlusHalf + 450f,
+                                                            y3 = 0f,
+                                                        )
+                                                        lineTo(bottomBarWidth.toPx(), 0f)
+                                                        lineTo(bottomBarWidth.toPx(), bottomBarHeight.toPx())
+                                                        lineTo(0f, bottomBarHeight.toPx())
+                                                        lineTo(0f, 0f)
+                                                        close()
+                                                    }
+
+                                                    drawPath(
+                                                        path = bottomBarPath,
+                                                        brush = gradient,
+                                                        style = Stroke(20f)
+                                                    )
+
+                                                    drawPath(
+                                                        path = bottomBarPath,
+                                                        color = Color.Black,
+                                                    )
+                                                }
+                                        ) {
+                                            bottomBarItems.forEachIndexed { index, item ->
+                                                if (index == 2) {
+
+                                                    CustomBottomNavItem(
+                                                        icon = {
+                                                            Icon(
+                                                                painter = painterResource(id = R.drawable.bi_lightning),
+                                                                contentDescription = null,
+                                                                tint = Color.Unspecified,
+                                                                modifier = Modifier.size(90.dp)
+                                                            )
+                                                        },
+                                                        label = null,
+                                                        selected = true,
+                                                        onClick = {
+                                                        }
+                                                    )
+
+                                                } else {
+                                                    CustomBottomNavItem(
+                                                        icon = {
+                                                            Icon(
+                                                                imageVector = item.icon,
+                                                                contentDescription = null,
+                                                                tint = Color.White
+                                                            )
+                                                        },
+                                                        label = item.titleResId,
+                                                        selected = true,
+                                                        onClick = {
+                                                        }
+                                                    )
+
+                                                }
+                                            }
+                                        }
+
                                     }
+                                ) {
+                                    Column(
+                                        Modifier.fillMaxSize(),
+                                        verticalArrangement = Arrangement.Center,
+                                        horizontalAlignment = Alignment.CenterHorizontally
+                                    ) {
+                                        Text(text = "Sevban")
+                                        Icon(
+                                            painter = painterResource(id = R.drawable.bi_lightning),
+                                            contentDescription = null,
+                                            modifier = Modifier.size(50.dp),
+                                            tint = Color.Unspecified
+                                        )
+                                    }
+                                }*/
 
-                                    drawPath(
-                                        path = bottomBarPath,
-                                        brush = gradient,
-                                        style = Stroke(20f)
-                                    )
+                val context = LocalContext.current
+                Column {
 
-                                    drawPath(
-                                        path = bottomBarPath,
-                                        color = Color.Black,
-                                    )
-                                }
-                        ) {
-                            bottomBarItems.forEachIndexed { index, item ->
-                                if (index == 2) {
-
-                                    CustomBottomNavItem(
-                                        icon = {
-                                            Icon(
-                                                painter = painterResource(id = R.drawable.bi_lightning),
-                                                contentDescription = null,
-                                                tint = Color.Unspecified,
-                                                modifier = Modifier.size(90.dp)
-                                            )
-                                        },
-                                        label = null,
-                                        selected = true,
-                                        onClick = {
-                                        }
-                                    )
-
-                                } else {
-                                    CustomBottomNavItem(
-                                        icon = {
-                                            Icon(
-                                                imageVector = item.icon,
-                                                contentDescription = null,
-                                                tint = Color.White
-                                            )
-                                        },
-                                        label = item.titleResId,
-                                        selected = true,
-                                        onClick = {
-                                        }
-                                    )
-
-                                }
-                            }
+                    HyperlinkText(
+                        stringResource = R.string.membership_agreement_text,
+                        modifier = Modifier.padding(16.dp),
+                        onClick = { hyperlink ->
+                            println(hyperlink)
                         }
-
-                    }
-                ) {
-                    Column(
-                        Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
-                        Text(text = "Sevban")
-                        Icon(
-                            painter = painterResource(id = R.drawable.bi_lightning),
-                            contentDescription = null,
-                            modifier = Modifier.size(50.dp),
-                            tint = Color.Unspecified
-                        )
-                    }
+                    )
+                    HyperlinkText(
+                        stringResource = R.string.explicit_consent_text,
+                        modifier = Modifier.padding(16.dp),
+                        onClick = { hyperlink ->
+                            println(hyperlink)
+                        }
+                    )
+                    HyperlinkText(
+                        stringResource = R.string.membership_agreement_text_tr,
+                        modifier = Modifier.padding(16.dp),
+                        onClick = { hyperlink ->
+                            println(hyperlink)
+                        }
+                    )
+                    HyperlinkText(
+                        stringResource = R.string.explicit_consent_text_tr,
+                        modifier = Modifier.padding(16.dp),
+                        onClick = { hyperlink ->
+                            println(hyperlink)
+                        }
+                    )
                 }
             }
         }

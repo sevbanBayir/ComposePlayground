@@ -1,3 +1,30 @@
 <resources>
     <string name="app_name">ComposeTutorialsSevbanBayir</string>
+    <string name="sample_text_with_links">
+        Visit our website [here](https://www.example.com) for more information.
+        Contact us via[email](mailto:support@example.com)
+        or call us at[123-456-7890](tel:+1234567890).
+    </string>
+
+    <string name="explicit_consent_text">
+        I have read and accepted the
+        [Clarification Text](https://www.clarificationtext.com).
+    </string>
+
+    <string name="membership_agreement_text">
+        I have read and accepted the
+        [Terms of Service](https://www.termsofservice.com), [Usage Terms](https://www.usageterms.com),
+        and [Privacy Policy](https://www.privacypolicy.com).
+    </string>
+
+    <string name="explicit_consent_text_tr">
+        [Açık Rıza Metni](https://www.acikrizametni.com)’ni okudum,
+        kabul ediyorum.
+    </string>
+
+    <string name="membership_agreement_text_tr">
+        [Üyelik Sözleşmesi](https://www.uyeliksozlesmesi.com),
+        [Kullanım Koşulları](https://www.kullanimkosullari.com) ve
+        [Aydınlatma Metni](https://www.aydinlatmametni.com)’ni okudum, kabul ediyorum.
+    </string>
 </resources>
