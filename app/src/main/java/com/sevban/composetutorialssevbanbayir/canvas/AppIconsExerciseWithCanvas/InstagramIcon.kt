@@ -1,4 +1,4 @@
-package com.sevban.composetutorialssevbanbayir.Canvas.AppIconsExerciseWithCanvas
+package com.sevban.composetutorialssevbanbayir.canvas.AppIconsExerciseWithCanvas
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.padding

@@ -1,4 +1,4 @@
-package com.sevban.composetutorialssevbanbayir.Canvas
+package com.sevban.composetutorialssevbanbayir.canvas
 
 import android.os.Build
 import androidx.annotation.RequiresApi

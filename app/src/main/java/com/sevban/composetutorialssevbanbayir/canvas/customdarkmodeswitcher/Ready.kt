@@ -1,4 +1,4 @@
-package com.sevban.composetutorialssevbanbayir.Canvas.customdarkmodeswitcher
+package com.sevban.composetutorialssevbanbayir.canvas.customdarkmodeswitcher
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring

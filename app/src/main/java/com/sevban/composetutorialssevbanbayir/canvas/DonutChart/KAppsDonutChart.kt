@@ -1,4 +1,4 @@
-package com.sevban.composetutorialssevbanbayir.Canvas.DonutChart
+package com.sevban.composetutorialssevbanbayir.canvas.DonutChart
 
 
 import android.graphics.Paint

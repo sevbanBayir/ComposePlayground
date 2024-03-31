@@ -1,4 +1,4 @@
-package com.sevban.composetutorialssevbanbayir.Canvas
+package com.sevban.composetutorialssevbanbayir.canvas
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.RepeatMode

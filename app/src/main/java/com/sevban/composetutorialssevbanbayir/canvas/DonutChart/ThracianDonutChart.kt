@@ -1,4 +1,4 @@
-package com.sevban.composetutorialssevbanbayir.Canvas.DonutChart
+package com.sevban.composetutorialssevbanbayir.canvas.DonutChart
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
