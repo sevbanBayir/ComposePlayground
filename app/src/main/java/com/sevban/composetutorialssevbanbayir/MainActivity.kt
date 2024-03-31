@@ -1,17 +1,16 @@
 package com.sevban.composetutorialssevbanbayir
 
-import android.annotation.SuppressLint
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
@@ -24,9 +23,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.sevban.composetutorialssevbanbayir.hyperlinktext.HyperlinkText
+import com.sevban.composetutorialssevbanbayir.canvas.weightpicker.Scale
+import com.sevban.composetutorialssevbanbayir.canvas.weightpicker.ScaleStyle
 import com.sevban.composetutorialssevbanbayir.special_components.curvedbottomnav.b_1.Screen
 import com.sevban.composetutorialssevbanbayir.ui.theme.ComposeTutorialsSevbanBayirTheme
 import org.kotlinmath.Complex
@@ -35,9 +34,7 @@ import org.kotlinmath.plus
 import org.kotlinmath.pow
 import org.kotlinmath.times
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 class MainActivity : ComponentActivity() {
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -183,37 +180,47 @@ class MainActivity : ComponentActivity() {
                                     }
                                 }*/
 
-                val context = LocalContext.current
-                Column {
+                /*                Column {
 
-                    HyperlinkText(
-                        stringResource = R.string.membership_agreement_text,
-                        modifier = Modifier.padding(16.dp),
-                        onClick = { hyperlink ->
-                            println(hyperlink)
-                        }
-                    )
-                    HyperlinkText(
-                        stringResource = R.string.explicit_consent_text,
-                        modifier = Modifier.padding(16.dp),
-                        onClick = { hyperlink ->
-                            println(hyperlink)
-                        }
-                    )
-                    HyperlinkText(
-                        stringResource = R.string.membership_agreement_text_tr,
-                        modifier = Modifier.padding(16.dp),
-                        onClick = { hyperlink ->
-                            println(hyperlink)
-                        }
-                    )
-                    HyperlinkText(
-                        stringResource = R.string.explicit_consent_text_tr,
-                        modifier = Modifier.padding(16.dp),
-                        onClick = { hyperlink ->
-                            println(hyperlink)
-                        }
-                    )
+                                    HyperlinkText(
+                                        stringResource = R.string.membership_agreement_text,
+                                        modifier = Modifier.padding(16.dp),
+                                        onClick = { hyperlink ->
+                                            println(hyperlink)
+                                        }
+                                    )
+                                    HyperlinkText(
+                                        stringResource = R.string.explicit_consent_text,
+                                        modifier = Modifier.padding(16.dp),
+                                        onClick = { hyperlink ->
+                                            println(hyperlink)
+                                        }
+                                    )
+                                    HyperlinkText(
+                                        stringResource = R.string.membership_agreement_text_tr,
+                                        modifier = Modifier.padding(16.dp),
+                                        onClick = { hyperlink ->
+                                            println(hyperlink)
+                                        }
+                                    )
+                                    HyperlinkText(
+                                        stringResource = R.string.explicit_consent_text_tr,
+                                        modifier = Modifier.padding(16.dp),
+                                        onClick = { hyperlink ->
+                                            println(hyperlink)
+                                        }
+                                    )
+                                }*/
+
+
+                Box(modifier = Modifier.fillMaxSize()) {
+                    Scale(
+                        style = ScaleStyle(scaleWidth = 150.dp),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(300.dp)
+                            .align(Alignment.BottomCenter),
+                        onWeightChange = { })
                 }
             }
         }
