@@ -3,6 +3,9 @@ package com.sevban.composetutorialssevbanbayir
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Indication
+import androidx.compose.foundation.IndicationInstance
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,6 +26,7 @@ import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.ripple.RippleTheme
 import androidx.compose.material3.Card
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -99,7 +103,24 @@ class MainActivity : ComponentActivity() {
                                         horizontalAlignment = Alignment.CenterHorizontally
                                     ) {
                                         Card (modifier = Modifier.fillMaxSize(), onClick = { }, shape = RectangleShape) {
+                                            Canvas(modifier = Modifier.fillMaxSize()) {
+                                                val gradient = Brush.horizontalGradient(
+                                                    colors = listOf(
+                                                        Color(0XFF00B100).copy(alpha = 0f),
+                                                        Color(0XFF00B100).copy(alpha = 0.2f),
+                                                        Color(0XFF0DACE1),
+                                                        Color(0XFF00B100).copy(alpha = 0.2f),
+                                                        Color(0XFF00B100).copy(alpha = 0f),
+                                                    ),
+                                                )
 
+                                                drawLine(
+                                                    brush = gradient,
+                                                    start = Offset(0f,1000f),
+                                                    end = Offset(1400f, 1000f),
+                                                    strokeWidth = 50f
+                                                )
+                                            }
                                         }
                                     }
                                 }
