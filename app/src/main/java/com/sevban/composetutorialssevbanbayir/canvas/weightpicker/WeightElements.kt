@@ -100,7 +100,7 @@ fun Scale(
                         60f,
                         0f,
                         0f,
-                        Color.argb(50, 0, 0, 0)
+                        Color.argb(150, 0, 0, 0)
                     )
                 }
             )
