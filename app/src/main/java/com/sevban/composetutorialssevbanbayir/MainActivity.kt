@@ -1,9 +1,11 @@
 package com.sevban.composetutorialssevbanbayir
 
+import android.graphics.Paint
+import android.graphics.Path
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,6 +13,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -19,17 +22,17 @@ import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.sevban.composetutorialssevbanbayir.special_components.curvedbottomnav.b_1.Screen
@@ -40,6 +43,7 @@ import org.kotlinmath.I
 import org.kotlinmath.plus
 import org.kotlinmath.pow
 import org.kotlinmath.times
+import kotlin.random.Random
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +57,8 @@ class MainActivity : ComponentActivity() {
                 ) { scaffoldPadding ->
                     Column(
                         Modifier
+                            .background(Color.White)
+
                             .padding(scaffoldPadding)
                             .fillMaxSize()
                             .verticalScroll(rememberScrollState()),
@@ -60,7 +66,43 @@ class MainActivity : ComponentActivity() {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         repeat(50) {
+                            val randomFloat = Random.nextDouble(10.0, 100.0)
                             Card(
+                                modifier = Modifier
+                                    .size(200.dp)
+                                    .drawWithContent {
+                                        drawContent()
+                                        /*                                drawLine(
+                                            start = Offset(0f, size.height / 2),
+                                            end = Offset(size.width, size.height / 2),
+                                            color = Color.Red
+                                        )*/
+
+                                        val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+                                            strokeWidth = 10f
+                                            color = android.graphics.Color.BLACK
+                                            style = Paint.Style.STROKE
+                                            setShadowLayer(
+                                                randomFloat.toFloat(),
+                                                0f,
+                                                0f,
+                                                android.graphics.Color.BLACK
+                                            )
+                                        }
+
+                                        val androidPath = Path().apply {
+                                            moveTo(0f, size.height / 2)
+                                            lineTo(size.width, size.height / 2)
+                                        }
+                                        drawContext.canvas.nativeCanvas.apply {
+
+                                            drawPath(
+                                                androidPath,
+                                                paint
+                                            )
+                                        }
+                                    },
+                                colors = CardDefaults.cardColors(containerColor = Color.White),
                                 onClick = { },
                                 shape = RectangleShape
                             ) {

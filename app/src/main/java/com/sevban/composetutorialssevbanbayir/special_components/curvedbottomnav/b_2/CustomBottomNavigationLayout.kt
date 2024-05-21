@@ -1,5 +1,8 @@
 package com.sevban.composetutorialssevbanbayir.special_components.curvedbottomnav.b_2
 
+import android.graphics.LinearGradient
+import android.graphics.Paint
+import android.graphics.Shader
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
@@ -11,6 +14,8 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.Layout
 import androidx.compose.ui.unit.dp
 import com.sevban.composetutorialssevbanbayir.CustomBottomNavItem
@@ -31,7 +36,7 @@ fun CurvedBottomBar() {
     CustomBottomNavigationLayout(
         modifier = Modifier
             .background(bottomBarBackgroundColor)
-            .drawBottomBarCurve(bottomBarBackgroundColor, gradientColors)
+            .drawBottomBarCurve(gradientColors,bottomBarBackgroundColor)
     ) {
         bottomBarItems.forEachIndexed { index, item ->
             if (index == 2) {
@@ -121,6 +126,80 @@ fun calculateWeightedGap(
     return gaps
 }
 
+private fun Modifier.drawBottomBarCurve(
+    gradientColors: List<Color>,
+    bottomBarBackgroundColor: Color
+) = drawWithCache {
+    val bottomBarWidth = size.width
+    val curveHeight = 20.dp
+    val cp1 = Offset(bottomBarWidth * .38f, 0f)
+    val cp2 = Offset(bottomBarWidth * .40f, -curveHeight.toPx())
+    val cp3 = Offset(bottomBarWidth * .57f, -curveHeight.toPx())
+    val cp4 = Offset(bottomBarWidth * .61f, 0f)
+
+    onDrawBehind {
+        val gradientAndroid =
+            LinearGradient(
+                0f,
+                0f,
+                size.width,
+                0f,
+                gradientColors.map { it.toArgb() }.toIntArray(),
+                null,
+                Shader.TileMode.CLAMP
+            )
+
+        val path =
+            android.graphics.Path()
+                .apply {
+                    moveTo(0f, 0f)
+                    lineTo(bottomBarWidth * .32f, 0f)
+                    cubicTo(
+                        cp1.x,
+                        cp1.y,
+                        cp2.x,
+                        cp2.y,
+                        bottomBarWidth / 2,
+                        -curveHeight.toPx()
+                    )
+                    cubicTo(
+                        cp3.x,
+                        cp3.y,
+                        cp4.x,
+                        cp4.y,
+                        bottomBarWidth * .68f,
+                        0f
+                    )
+                    lineTo(bottomBarWidth, 0f)
+                }
+
+        drawContext.canvas.nativeCanvas.apply {
+            val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+            drawPath(
+                path,
+                paint.apply {
+                    style = Paint.Style.FILL
+                    color = bottomBarBackgroundColor.toArgb()
+                }
+            )
+            drawPath(
+                path,
+                paint.apply {
+                    style = Paint.Style.STROKE
+                    shader = gradientAndroid
+                    strokeWidth = 10f
+                    setShadowLayer(
+                        260f,
+                        0f,
+                        0f,
+                        android.graphics.Color.BLACK
+                    )
+                }
+            )
+        }
+    }
+}
+/*
 fun Modifier.drawBottomBarCurve(
     bottomBarBackgroundColor: Color,
     gradientColors: List<Color>
@@ -166,3 +245,4 @@ fun Modifier.drawBottomBarCurve(
         )
     }
 }
+*/
